@@ -1,0 +1,21 @@
+# Use the official Jenkins LTS image as the base
+FROM jenkins/jenkins:lts
+
+# Switch to the root user to install additional packages
+USER root
+
+# Install any necessary packages
+RUN apt-get update && apt-get install -y \
+    sudo \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Switch back to the Jenkins user
+USER jenkins
+
+# Expose the necessary ports
+EXPOSE 8080 50000
+
+# Define the default command to run Jenkins
+CMD ["jenkins"]
